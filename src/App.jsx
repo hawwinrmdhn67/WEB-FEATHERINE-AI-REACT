@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import InputBar from './components/InputBar';
 import { Plus, Bot, Menu, MessageSquare, Copy } from 'lucide-react';
-import { callGroqAPI } from './api/openai'; // ✅ Groq API
+import { callGroqAPI } from './api/openai';
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'framer-motion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -64,7 +64,7 @@ function App() {
 
     setIsTyping(true);
     try {
-      const aiReply = await callGroqAPI(messagesForAPI); // ✅ pakai Groq
+      const aiReply = await callGroqAPI(messagesForAPI);
       setIsTyping(false);
       setMessages((prev) => [...prev, { role: 'bot', type: 'text', content: aiReply }]);
     } catch (err) {
@@ -115,6 +115,10 @@ function App() {
           </div>
         </div>
 
+        <div className="mt-4 px-2 text-yellow-300 text-xs text-center bg-yellow-800/20 border border-yellow-600 rounded-md py-2">
+          ⚠️ Jangan upload foto agar AI tidak error karena masih tahap pengembangan.
+        </div>
+        
         <button onClick={() => {
           console.log("Fitur login Google belum tersedia.");
           // Optionally, display a temporary message in the UI instead of alert
