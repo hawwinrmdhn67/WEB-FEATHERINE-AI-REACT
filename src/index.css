@@ -1,0 +1,16 @@
+@import "tailwindcss";
+/* src/index.css atau src/App.css */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2d2d2d; /* abu-abu gelap */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6b7280; /* abu-abu (gray-500) */
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
