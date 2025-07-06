@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import InputBar from './components/InputBar';
-import { Plus, Bot, Menu, MessageSquare, Copy } from 'lucide-react';
+import { Plus, Bot, Menu, MessageSquare, Copy, } from 'lucide-react';
 import { callGroqAPI } from './api/openai';
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'framer-motion';
@@ -14,9 +14,14 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
   const messageEndRef = useRef(null);
 
-  useEffect(() => {
+useEffect(() => {
+  const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping]);
+  };
+
+  const timeout = setTimeout(scrollToBottom, isTyping ? 100 : 300); 
+  return () => clearTimeout(timeout);
+}, [messages, isTyping]);
 
   const handleSend = useCallback(async (newInputMessages) => {
     if (!newInputMessages || newInputMessages.length === 0) return;
@@ -121,7 +126,7 @@ function App() {
         
         <button onClick={() => {
           console.log("Fitur login Google belum tersedia.");
-          // Optionally, display a temporary message in the UI instead of alert
+
         }} className="w-full bg-white text-gray-900 text-sm px-3 py-2 rounded-lg shadow-md mt-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition">
           {/* New Google Logo SVG */}
           <svg viewBox="0 0 24 24" className="w-5 h-5">
@@ -134,7 +139,7 @@ function App() {
         </button>
       </motion.div>
 
-      {/* Overlay for sidebar */}
+
       {showSidebar && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -142,7 +147,7 @@ function App() {
         ></div>
       )}
 
-      {/* Main Chat Area */}
+
       <div className="flex-1 flex flex-col h-screen w-full">
         {/* Topbar */}
         <div className="sticky top-0 z-20 bg-gray-800 p-4 shadow-md flex items-center">
@@ -152,7 +157,7 @@ function App() {
           <h2 className="text-lg font-semibold text-white ml-4">Featherine Chat</h2>
         </div>
 
-        {/* Chat Content */}
+
         {!hasStartedChat ? (
           <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 text-center">
             <div>
@@ -196,63 +201,50 @@ function App() {
                         <div className="flex-grow bg-gray-700 text-white rounded-2xl px-4 py-3 shadow overflow-hidden">
                           <ReactMarkdown
                             components={{
-                              code({ node, inline, className, children }) {
-                                const [copied, setCopied] = useState(false);
-                                const match = /language-(\w+)/.exec(className || '');
+                              code({ inline, className, children }) {
                                 const codeString = String(children).replace(/\n$/, '');
+                                const language = (className || '').replace('language-', '');
+                                const [copied, setCopied] = useState(false);
 
                                 const handleCopy = () => {
-                                  const textArea = document.createElement('textarea');
-                                  textArea.value = codeString;
-                                  document.body.appendChild(textArea);
-                                  textArea.select();
-                                  try {
-                                    document.execCommand('copy');
-                                    setCopied(true);
-                                    setTimeout(() => setCopied(false), 1500);
-                                  } catch (err) {
-                                    console.error('Failed to copy text:', err);
-                                  }
-                                  document.body.removeChild(textArea);
+                                  navigator.clipboard.writeText(codeString);
+                                  setCopied(true);
+                                  setTimeout(() => setCopied(false), 1500);
                                 };
 
-                                if (!inline && match) {
+                                if (inline) {
                                   return (
-                                    <div className="relative group overflow-x-auto max-w-full rounded-lg my-2">
-                                      <button
-                                        onClick={handleCopy}
-                                        className="absolute top-2 right-2 z-10 bg-gray-800 text-gray-200 hover:bg-gray-700 border border-gray-600 rounded px-2 py-1 text-xs opacity-0 group-hover:opacity-100 transition flex items-center gap-1"
-                                      >
-                                        {copied ? 'Copied!' : <Copy size={14} />}
-                                      </button>
-                                      <SyntaxHighlighter style={oneDark} language={match[1]} PreTag="div" className="text-sm rounded-lg" wrapLongLines={true}>
-                                        {codeString}
-                                      </SyntaxHighlighter>
-                                    </div>
-                                  );
-                                } else {
-                                  return (
-                                    <code className="bg-gray-800 text-purple-300 px-1 py-0.5 rounded text-sm inline-block break-words whitespace-pre-wrap">
-                                      {children}
+                                    <code className="bg-purple-950 text-purple-300 px-1 py-0.5 rounded text-sm">
+                                      {codeString}
                                     </code>
                                   );
                                 }
-                              },
-                              img: ({ node, ...props }) => <img className="max-w-full h-auto rounded-lg" {...props} />,
-                              table: ({ node, ...props }) => (
-                                <div className="overflow-x-auto my-2">
-                                  <table className="min-w-full divide-y divide-gray-600 rounded-lg overflow-hidden" {...props} />
-                                </div>
-                              ),
-                              pre: ({ node, ...props }) => (
-                                <div className="overflow-x-auto my-2 rounded-lg">
-                                  <pre className="p-3 bg-gray-800 text-gray-200 rounded-lg text-sm" {...props} />
-                                </div>
-                              ),
+
+                                return (
+                                  <div className="relative group overflow-x-auto max-w-full my-2 rounded-lg">
+                                    <button
+                                      onClick={handleCopy}
+                                      className="absolute top-2 right-2 z-10 bg-purple-800 text-purple-200 hover:bg-purple-700 border border-purple-600 rounded px-2 py-1 text-xs opacity-0 group-hover:opacity-100 transition flex items-center gap-1"
+                                    >
+                                      {copied ? 'Copied!' : <Copy size={14} />}
+                                    </button>
+                                    <SyntaxHighlighter
+                                      style={oneDark}
+                                      language={language}
+                                      PreTag="div"
+                                      className="text-sm rounded-lg"
+                                      wrapLongLines
+                                    >
+                                      {codeString}
+                                    </SyntaxHighlighter>
+                                  </div>
+                                );
+                              }
                             }}
                           >
                             {msg.content}
                           </ReactMarkdown>
+
                         </div>
                       </div>
                     )}

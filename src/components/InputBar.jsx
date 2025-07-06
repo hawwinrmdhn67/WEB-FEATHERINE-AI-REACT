@@ -48,12 +48,12 @@ function InputBar({ onSend }) {
     const el = e.target;
     setInput(el.value);
 
-    // Auto-expand
+
     el.style.height = 'auto';
     el.style.transition = 'height 0.15s ease';
     el.style.height = `${el.scrollHeight}px`;
 
-    // Tampilkan scrollbar hanya jika konten melebihi baris pertama
+
     setShouldShowScroll(el.scrollHeight > el.clientHeight + 1);
   };
 
@@ -79,7 +79,7 @@ function InputBar({ onSend }) {
       )}
 
       <div className="flex items-center gap-2">
-        {/* Upload button */}
+
         <button
           type="button"
           onClick={() => fileInputRef.current.click()}
@@ -96,7 +96,7 @@ function InputBar({ onSend }) {
           onChange={handleImageUpload}
         />
 
-        {/* Textarea with dynamic scroll logic */}
+
         <textarea
           ref={textareaRef}
           placeholder="Tulis pesan..."
@@ -109,7 +109,7 @@ function InputBar({ onSend }) {
           rows={1}
         />
 
-        {/* Kirim */}
+
         <button
           type="submit"
           className="p-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition"

@@ -1,5 +1,5 @@
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
-const GROQ_MODEL = "llama3-8b-8192"; // Atau ganti dengan "llama3-70b-8192" jika kamu mau versi lebih besar
+const GROQ_MODEL = "llama3-8b-8192"; 
 
 export const callGroqAPI = async (messages) => {
   if (!GROQ_API_KEY) {
