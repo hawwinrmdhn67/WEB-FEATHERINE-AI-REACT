@@ -85,7 +85,6 @@ useEffect(() => {
 
  return (
     <div className="min-h-screen bg-gray-900 text-white flex relative font-inter">
-      {/* Sidebar */}
       <motion.div
         initial={false}
         animate={{ x: showSidebar ? 0 : '-100%' }}
@@ -100,7 +99,7 @@ useEffect(() => {
             </div>
             <button onClick={() => setShowSidebar(false)} className="text-gray-400 hover:text-white text-3xl font-bold leading-none pb-1" aria-label="Close sidebar">×</button>
           </div>
-
+          
           <div className="space-y-3 mt-8">
             <button onClick={() => {
               setMessages([]);
@@ -110,10 +109,9 @@ useEffect(() => {
             }} className="w-full bg-purple-700 hover:bg-purple-800 px-3 py-2 rounded-lg text-sm flex items-center gap-2 justify-center transition shadow-md">
               <Plus size={16} /> Chat Baru
             </button>
-
+            
             <button onClick={() => {
               console.log("Fitur daftar chat belum tersedia.");
-              // Optionally, display a temporary message in the UI instead of alert
             }} className="w-full bg-purple-700 hover:bg-purple-800 px-3 py-2 rounded-lg text-sm flex items-center gap-2 justify-center transition shadow-md">
               <MessageSquare size={16} /> Buka List Chat
             </button>
@@ -123,12 +121,10 @@ useEffect(() => {
         <div className="mt-4 px-2 text-yellow-300 text-xs text-center bg-yellow-800/20 border border-yellow-600 rounded-md py-2">
           ⚠️ Jangan upload foto agar AI tidak error karena masih tahap pengembangan.
         </div>
-        
+
         <button onClick={() => {
           console.log("Fitur login Google belum tersedia.");
-
         }} className="w-full bg-white text-gray-900 text-sm px-3 py-2 rounded-lg shadow-md mt-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition">
-          {/* New Google Logo SVG */}
           <svg viewBox="0 0 24 24" className="w-5 h-5">
             <path fill="#4285F4" d="M22.56 12.25c0-.62-.05-1.22-.16-1.81H12v3.63h6.4c-.28 1.45-1.17 2.68-2.5 3.53v2.8h3.62c2.11-1.95 3.32-4.82 3.32-8.15z"/>
             <path fill="#34A853" d="M12 23c3.24 0 5.95-1.08 7.93-2.94l-3.62-2.8c-1.02.68-2.32 1.08-4.31 1.08-3.32 0-6.13-2.22-7.14-5.22H.86v2.8C2.98 20.53 7.15 23 12 23z"/>
@@ -138,15 +134,13 @@ useEffect(() => {
           Login dengan Google
         </button>
       </motion.div>
-
-
+      
       {showSidebar && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           onClick={() => setShowSidebar(false)}
         ></div>
       )}
-
 
       <div className="flex-1 flex flex-col h-screen w-full">
         {/* Topbar */}
@@ -157,7 +151,6 @@ useEffect(() => {
           <h2 className="text-lg font-semibold text-white ml-4">Featherine Chat</h2>
         </div>
 
-
         {!hasStartedChat ? (
           <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 text-center">
             <div>
@@ -165,7 +158,7 @@ useEffect(() => {
               <h1 className="text-3xl font-bold text-white mb-2">Hi, aku <span className="text-purple-400">Featherine</span></h1>
               <p className="text-gray-300 text-base">ada yang bisa aku bantu?</p>
             </div>
-            <div className="w-full max-w-2xl mt-8 px-4 sm:px-0"> {/* Added px for smaller screens */}
+            <div className="w-full max-w-2xl mt-8 px-4 sm:px-0">
               <InputBar onSend={handleSend} />
             </div>
           </div>
