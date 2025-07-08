@@ -371,7 +371,9 @@ function App() {
                 alt="User Avatar"
                 className="w-8 h-8 rounded-full border border-purple-500 shadow"
               />
-              <span className="text-sm text-white truncate max-w-[150px]">{user.email}</span>
+              <span className="text-sm text-white truncate max-w-[150px]">
+                {user.user_metadata?.full_name || 'Pengguna'}
+              </span>
               <button
                 onClick={async () => {
                   const result = await Swal.fire({
