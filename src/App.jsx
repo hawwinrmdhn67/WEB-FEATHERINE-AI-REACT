@@ -221,7 +221,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex relative font-inter">
-      {/* Sidebar */}
       <motion.div
         initial={false}
         animate={{ x: showSidebar ? 0 : '-100%' }}
@@ -240,7 +239,7 @@ function App() {
             </div>
             <button onClick={() => setShowSidebar(false)} className="text-gray-400 hover:text-white text-3xl font-bold leading-none pb-1">×</button>
           </div>
-
+          
           <div className="space-y-3 mt-8">
             <button
               onClick={() => {
@@ -253,11 +252,18 @@ function App() {
             >
               <Plus size={16} /> Chat Baru
             </button>
+<<<<<<< HEAD
 
             <button
               onClick={() => setShowChatList(!showChatList)}
               className="w-full bg-purple-700 hover:bg-purple-800 px-3 py-2 rounded-lg text-sm flex items-center gap-2 justify-center transition shadow-md"
             >
+=======
+            
+            <button onClick={() => {
+              console.log("Fitur daftar chat belum tersedia.");
+            }} className="w-full bg-purple-700 hover:bg-purple-800 px-3 py-2 rounded-lg text-sm flex items-center gap-2 justify-center transition shadow-md">
+>>>>>>> 801ce38115bdaaca0677bc091b84108b3ac97758
               <MessageSquare size={16} /> Buka List Chat
             </button>
 
@@ -322,6 +328,7 @@ function App() {
           ⚠️ Jangan upload foto agar AI tidak error karena masih tahap pengembangan.
         </div>
 
+<<<<<<< HEAD
         <button
           onClick={async () => {
             const { error } = await supabase.auth.signInWithOAuth({
@@ -333,6 +340,11 @@ function App() {
           }}
           className="w-full bg-white text-gray-900 text-sm px-3 py-2 rounded-lg shadow-md mt-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition"
         >
+=======
+        <button onClick={() => {
+          console.log("Fitur login Google belum tersedia.");
+        }} className="w-full bg-white text-gray-900 text-sm px-3 py-2 rounded-lg shadow-md mt-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition">
+>>>>>>> 801ce38115bdaaca0677bc091b84108b3ac97758
           <svg viewBox="0 0 24 24" className="w-5 h-5">
             <path
               fill="#4285F4"
@@ -354,8 +366,19 @@ function App() {
           Login dengan Google
         </button>
       </motion.div>
+<<<<<<< HEAD
 
       {/* Chat area */}
+=======
+      
+      {showSidebar && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setShowSidebar(false)}
+        ></div>
+      )}
+
+>>>>>>> 801ce38115bdaaca0677bc091b84108b3ac97758
       <div className="flex-1 flex flex-col h-screen w-full">
         <div className="sticky top-0 z-20 bg-gray-800 p-4 shadow-md flex items-center justify-between">
           <div className="flex items-center">
@@ -432,12 +455,19 @@ function App() {
           )}
         </div>
 
-
         {!hasStartedChat ? (
           <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 text-center">
+<<<<<<< HEAD
             <img src="https://imagedelivery.net/LBWXYQ-XnKSYxbZ-NuYGqQ/6b6d2b5b-dbf5-43f8-9f99-3a78f44d8700/avatarhd" alt="Featherine Logo" className="w-24 h-24 rounded-full object-cover object-top shadow-2xl ring-4 ring-purple-500/30 mb-4 mx-auto" />
             <h1 className="text-3xl font-bold text-white mb-2">Hi, aku <span className="text-purple-400">Featherine</span></h1>
             <p className="text-gray-300 text-base">ada yang bisa aku bantu?</p>
+=======
+            <div>
+              <img src="https://imagedelivery.net/LBWXYQ-XnKSYxbZ-NuYGqQ/6b6d2b5b-dbf5-43f8-9f99-3a78f44d8700/avatarhd" alt="Featherine Logo" className="w-24 h-24 rounded-full object-cover object-top shadow-2xl ring-4 ring-purple-500/30 mb-4 mx-auto" />
+              <h1 className="text-3xl font-bold text-white mb-2">Hi, aku <span className="text-purple-400">Featherine</span></h1>
+              <p className="text-gray-300 text-base">ada yang bisa aku bantu?</p>
+            </div>
+>>>>>>> 801ce38115bdaaca0677bc091b84108b3ac97758
             <div className="w-full max-w-2xl mt-8 px-4 sm:px-0">
               <InputBar onSend={handleSend} />
             </div>
