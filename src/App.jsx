@@ -371,22 +371,28 @@ function App() {
                 alt="User Avatar"
                 className="w-8 h-8 rounded-full border border-purple-500 shadow"
               />
-              <span className="text-sm text-white truncate max-w-[150px]">
-                {user.user_metadata?.full_name || 'Pengguna'}
-              </span>
+              <div className="flex items-center gap-2 overflow-hidden max-w-[200px]">
+                <img src={user.user_metadata?.avatar_url} alt="Avatar" className="w-8 h-8 rounded-full shrink-0" />
+                <span className="text-sm text-white truncate max-w-[150px]">
+                  {user.user_metadata?.full_name || 'Pengguna'}
+                </span>
+              </div>
               <button
                 onClick={async () => {
                   const result = await Swal.fire({
-                    icon: 'warning',
-                    title: 'Yakin ingin logout?',
-                    text: 'Featherine akan sedih jika kamu logout :(',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Logout',
-                    cancelButtonText: 'Batal',
-                    confirmButtonColor: '#8B5CF6',
-                    cancelButtonColor: '#4B5563',
-                    background: '#1F2937',
-                    color: '#fff',
+                  icon: 'warning',
+                  title: 'Yakin ingin logout?',
+                  text: 'Featherine akan sedih jika kamu logout :(',
+                  showCancelButton: true,
+                  confirmButtonText: 'Ya, Logout',
+                  cancelButtonText: 'Batal',
+                  confirmButtonColor: '#8B5CF6',
+                  cancelButtonColor: '#4B5563',
+                  background: '#1F2937',
+                  color: '#fff',
+                  customClass: {
+                  popup: 'swal-custom-mobile',
+                  }
                   });
 
                   if (result.isConfirmed) {
