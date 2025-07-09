@@ -25,6 +25,7 @@ function App() {
   const [hasStartedChat, setHasStartedChat] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [showChatList, setShowChatList] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [user, setUser] = useState(null);
   const messageEndRef = useRef(null);
 
@@ -82,6 +83,17 @@ function App() {
       }
     }
   }, [user]);
+
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (!event.target.closest('.user-menu-avatar')) {
+      setShowUserMenu(false);
+    }
+  };
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+
 
   const handleSend = useCallback(async (newInputMessages) => {
     if (!newInputMessages || newInputMessages.length === 0) return;
@@ -370,73 +382,80 @@ function App() {
             <h2 className="text-lg font-semibold text-white ml-2">Featherine</h2>
           </div>
           {user && (
-            <div className="flex items-center gap-2 max-w-[60%] sm:max-w-none overflow-hidden">
+            <div className="relative">
               <img
                 src={user.user_metadata?.avatar_url || "https://ui-avatars.com/api/?name=U&background=6B21A8&color=fff"}
                 alt="User Avatar"
-                className="w-8 h-8 rounded-full border border-purple-500 shadow shrink-0"
+                className="w-8 h-8 rounded-full border border-purple-500 shadow cursor-pointer"
+                onClick={() => setShowUserMenu(prev => !prev)}
               />
-              <span className="text-sm text-white truncate whitespace-nowrap max-w-[100px] sm:max-w-[150px]">
-                {user.user_metadata?.full_name || 'Pengguna'}
-              </span>
-              <button
-                onClick={async () => {
-                  const result = await Swal.fire({
-                    icon: 'warning',
-                    title: 'Yakin ingin logout?',
-                    text: 'Featherine akan sedih jika kamu logout :(',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Logout',
-                    cancelButtonText: 'Batal',
-                    confirmButtonColor: '#8B5CF6',
-                    cancelButtonColor: '#4B5563',
-                    background: '#1F2937',
-                    color: '#fff',
-                  });
-
-                  if (result.isConfirmed) {
-                    const { error } = await supabase.auth.signOut();
-                    if (error) {
-                      console.error('Logout gagal:', error.message);
-                    } else {
-                      Swal.fire({
-                        icon: 'success',
-                        title: 'Logout Berhasil',
-                        text: 'Created By HawwinRomadhon',
+              {showUserMenu && (
+                <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 overflow-hidden">
+                  <div className="px-4 py-3">
+                    <p className="text-sm font-medium text-white truncate">{user.user_metadata?.full_name}</p>
+                    <p className="text-sm text-gray-400 truncate">{user.email}</p>
+                  </div>
+                  <div className="border-t border-gray-700" />
+                  <button
+                    onClick={async () => {
+                      const result = await Swal.fire({
+                        icon: 'warning',
+                        title: 'Yakin ingin logout?',
+                        text: 'Featherine akan sedih jika kamu logout :(',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Logout',
+                        cancelButtonText: 'Batal',
                         confirmButtonColor: '#8B5CF6',
+                        cancelButtonColor: '#4B5563',
                         background: '#1F2937',
                         color: '#fff',
                       });
 
-                      setUser(null);
-                      setMessages([]);
-                      setHasStartedChat(false);
-                      setCurrentSession([]);
+                      if (result.isConfirmed) {
+                        const { error } = await supabase.auth.signOut();
+                        if (error) {
+                          console.error('Logout gagal:', error.message);
+                        } else {
+                          Swal.fire({
+                            icon: 'success',
+                            title: 'Logout Berhasil',
+                            text: 'Created By HawwinRomadhon',
+                            confirmButtonColor: '#8B5CF6',
+                            background: '#1F2937',
+                            color: '#fff',
+                          });
 
-                      // Ambil kembali riwayat non-login dari localStorage
-                      const saved = localStorage.getItem('chatHistory');
-                      if (saved) {
-                        try {
-                          const parsed = JSON.parse(saved);
-                          const valid = parsed.filter(s => Array.isArray(s.messages));
-                          setChatHistory(valid);
-                        } catch (e) {
-                          localStorage.removeItem('chatHistory');
-                          setChatHistory([]);
+                          setUser(null);
+                          setMessages([]);
+                          setHasStartedChat(false);
+                          setCurrentSession([]);
+                          setShowUserMenu(false);
+
+                          const saved = localStorage.getItem('chatHistory');
+                          if (saved) {
+                            try {
+                              const parsed = JSON.parse(saved);
+                              const valid = parsed.filter(s => Array.isArray(s.messages));
+                              setChatHistory(valid);
+                            } catch (e) {
+                              localStorage.removeItem('chatHistory');
+                              setChatHistory([]);
+                            }
+                          } else {
+                            setChatHistory([]);
+                          }
                         }
-                      } else {
-                        setChatHistory([]);
                       }
-                    }
-                  }
-                }}
-                className="text-xs text-purple-300 hover:text-white border border-purple-600 px-2 py-1 rounded-md transition"
-              >
-                Logout
-              </button>
-
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:text-red-300 transition"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           )}
+
         </div>
 
 
