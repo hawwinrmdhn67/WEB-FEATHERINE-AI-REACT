@@ -86,7 +86,10 @@ function App() {
 
   useEffect(() => {
   const handleClickOutside = (event) => {
-    if (!event.target.closest('.user-menu-avatar')) {
+    if (
+      !event.target.closest('.user-menu-avatar') &&
+      !event.target.closest('.user-dropdown')
+    ) {
       setShowUserMenu(false);
     }
   };
