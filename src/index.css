@@ -14,3 +14,11 @@
   border: 2px solid transparent;
   background-clip: content-box;
 }
+
+.swal-custom-mobile {
+  max-width: 90vw !important;
+  width: 100% !important;
+  border-radius: 1rem !important;
+  padding: 1rem !important;
+  box-sizing: border-box;
+}

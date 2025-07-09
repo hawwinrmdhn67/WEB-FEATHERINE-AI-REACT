@@ -357,42 +357,40 @@ function App() {
 
       {/* Chat area */}
       <div className="flex-1 flex flex-col h-screen w-full">
-        <div className="sticky top-0 z-20 bg-gray-800 p-4 shadow-md flex items-center justify-between">
+        <div className="sticky top-0 z-20 bg-gray-800 p-4 shadow-md flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
           <div className="flex items-center">
             <button onClick={() => setShowSidebar(!showSidebar)} className="p-2 rounded-full hover:bg-gray-700 transition">
               <Menu size={24} className="text-white" />
             </button>
             <h2 className="text-lg font-semibold text-white ml-4">Featherine Chat</h2>
           </div>
+
           {user && (
-            <div className="flex items-center gap-3 mt-[-4px]">
+            <div className="flex items-center gap-2 max-w-full overflow-hidden">
               <img
                 src={user.user_metadata?.avatar_url || "https://ui-avatars.com/api/?name=U&background=6B21A8&color=fff"}
                 alt="User Avatar"
-                className="w-8 h-8 rounded-full border border-purple-500 shadow"
+                className="w-8 h-8 rounded-full border border-purple-500 shadow shrink-0"
               />
-              <div className="flex items-center gap-2 overflow-hidden max-w-[200px]">
-                <img src={user.user_metadata?.avatar_url} alt="Avatar" className="w-8 h-8 rounded-full shrink-0" />
-                <span className="text-sm text-white truncate max-w-[150px]">
-                  {user.user_metadata?.full_name || 'Pengguna'}
-                </span>
-              </div>
+              <span className="text-sm text-white truncate max-w-[110px]">
+                {user.user_metadata?.full_name || 'Pengguna'}
+              </span>
               <button
                 onClick={async () => {
                   const result = await Swal.fire({
-                  icon: 'warning',
-                  title: 'Yakin ingin logout?',
-                  text: 'Featherine akan sedih jika kamu logout :(',
-                  showCancelButton: true,
-                  confirmButtonText: 'Ya, Logout',
-                  cancelButtonText: 'Batal',
-                  confirmButtonColor: '#8B5CF6',
-                  cancelButtonColor: '#4B5563',
-                  background: '#1F2937',
-                  color: '#fff',
-                  customClass: {
-                  popup: 'swal-custom-mobile',
-                  }
+                    icon: 'warning',
+                    title: 'Yakin ingin logout?',
+                    text: 'Featherine akan sedih jika kamu logout :(',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Logout',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#8B5CF6',
+                    cancelButtonColor: '#4B5563',
+                    background: '#1F2937',
+                    color: '#fff',
+                    customClass: {
+                      popup: 'swal-custom-mobile',
+                    },
                   });
 
                   if (result.isConfirmed) {
@@ -414,7 +412,6 @@ function App() {
                       setHasStartedChat(false);
                       setCurrentSession([]);
 
-                      // Ambil kembali riwayat non-login dari localStorage
                       const saved = localStorage.getItem('chatHistory');
                       if (saved) {
                         try {
@@ -435,7 +432,6 @@ function App() {
               >
                 Logout
               </button>
-
             </div>
           )}
         </div>
