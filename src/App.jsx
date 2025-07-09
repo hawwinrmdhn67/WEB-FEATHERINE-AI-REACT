@@ -386,11 +386,11 @@ function App() {
               <img
                 src={user.user_metadata?.avatar_url || "https://ui-avatars.com/api/?name=U&background=6B21A8&color=fff"}
                 alt="User Avatar"
-                className="w-8 h-8 rounded-full border border-purple-500 shadow cursor-pointer"
+                className="w-8 h-8 rounded-full border border-purple-500 shadow cursor-pointer user-menu-avatar"
                 onClick={() => setShowUserMenu(prev => !prev)}
               />
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 overflow-hidden">
+                <div className="user-dropdown absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 overflow-hidden">
                   <div className="px-4 py-3">
                     <p className="text-sm font-medium text-white truncate">{user.user_metadata?.full_name}</p>
                     <p className="text-sm text-gray-400 truncate">{user.email}</p>
@@ -398,6 +398,7 @@ function App() {
                   <div className="border-t border-gray-700" />
                   <button
                     onClick={async () => {
+                      console.log("Tombol logout diklik");
                       const result = await Swal.fire({
                         icon: 'warning',
                         title: 'Yakin ingin logout?',
@@ -455,7 +456,6 @@ function App() {
               )}
             </div>
           )}
-
         </div>
 
 
